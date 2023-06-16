@@ -1,14 +1,147 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Page title</title>
-    <link rel="stylesheet" href="./sass/index.scss" />
-    <script type="module" src="./index.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,400;0,500;0,700;1,400;1,500;1,700&display=swap"
+      rel="stylesheet"
+    />
+    <title>Document</title>
+    <link rel="stylesheet" href="./css/style.css" />
   </head>
   <body>
-    <!-- ❗️❗️❗️ Add partials like so for every page -->
-    <include src="./partials/example.html"></include>
+    <!-- site header section -->
+    <header class="header">
+      <div class="header-container container">
+        <nav class="header-navigation">
+          <a class="header-logotype logotype link" href="./index.html">
+            <svg class="header-img-light" width="109" height="28">
+              <use href="./img/icons/icons.svg#icon-logo_light"></use>
+            </svg>
+            <svg
+              class="header-img-dark visually-hidden"
+              width="109"
+              height="28"
+            >
+              <use href="./img/icons/icons.svg#icon-logo_dark"></use>
+            </svg>
+          </a>
+          <ul class="header-list list">
+            <li class="header-list-item">
+              <a class="header-list-item-link link current" href="./index.html"
+                >Home</a
+              >
+            </li>
+            <li class="header-list-item">
+              <a class="header-list-item-link link" href="./index.html"
+                >Shopping list</a
+              >
+            </li>
+          </ul>
+        </nav>
+        <div class="header-btn">
+          <button type="button" class="btn-switch">
+            <div class="knobs-big"></div>
+            <div class="knobs-medium"></div>
+            <div class="knobs-small"></div>
+          </button>
+          <button type="button" class="btn-login" data-authorization-open>
+            <div class="btn-login-content">
+              <p class="btn-login-text">Sign up</p>
+              <svg class="btn-login-img" width="20" height="20">
+                <use href="./img/icons/icons.svg#icon-arrow-right"></use>
+              </svg>
+            </div>
+          </button>
+        </div>
+      </div>
+    </header>
+    <!-- /site header section -->
+
+    <!-- authorization window -->
+    <div class="authorization-backdrop is-hidden" data-authorization>
+      <div class="authorization-window">
+        <button
+          class="authorization-window-close-button"
+          type="button"
+          data-authorization-close
+        >
+          <svg
+            class="authorization-window-close-button-icon"
+            width="28"
+            height="28"
+          >
+            <use href="./img/icons/icons.svg#icon-x-close"></use>
+          </svg>
+        </button>
+
+        <form class="authorization-window-form js-speaker-form">
+          <label class="authorization-window-label" for="name">
+            <div class="authorization-window-field">
+              <input
+                class="authorization-window-input"
+                type="text"
+                name="user-name"
+                placeholder="name"
+                id="name"
+                pattern="^[a-zA-Z]+"
+                minlength="2"
+                required
+                autofocus
+              />
+            </div>
+          </label>
+
+          <label class="authorization-window-label" for="email">
+            <div class="authorization-window-field">
+              <input
+                class="authorization-window-input"
+                type="email"
+                name="user-email"
+                placeholder="email"
+                id="email"
+                required
+              />
+              <svg class="authorization-window-icon" width="28" height="28">
+                <use href="./img/icons/icons.svg#icon-mail"></use>
+              </svg>
+            </div>
+          </label>
+
+          <label class="authorization-window-label" for="password">
+            <div class="authorization-window-field">
+              <input
+                class="authorization-window-input"
+                type="password"
+                name="user-password"
+                placeholder="password"
+                id="password"
+                required
+              />
+              <svg class="authorization-window-icon" width="28" height="28">
+                <use href="./img/icons/icons.svg#icon-lock"></use>
+              </svg>
+            </div>
+          </label>
+          <button class="authorization-window-submit-button" type="submit">
+            Sign up
+          </button>
+          <div class="authorization-window-sign-buttons">
+            <button class="authorization-window-sign-button up" type="button">
+              sign up
+            </button>
+            <button class="authorization-window-sign-button in" type="button">
+              sign in
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+    <!-- /authorization window -->
+    <script type="module" src="./js/authorization.js"></script>
+    <script type="module" src="./index.js"></script>
   </body>
 </html>
