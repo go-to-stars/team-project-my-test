@@ -540,16 +540,16 @@ img {
 }
 
 
-.sign-up {
-}
-.sign-in {
-}
+/* .sign-up {
+} */
+/* .sign-in {
+} */
 /* .sign-out {
 } */
-.password-reset {
-}
-.delete-user {
-}
+/* .password-reset {
+} */
+/* .delete-user {
+} */
 
 .sign-up, .sign-in, .password-reset, .delete-user  {
   border: 2px solid transparent;
