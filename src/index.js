@@ -23,8 +23,11 @@ const refs = {
   signUpButton: document.querySelector('.up'),
   signInButton: document.querySelector('.in'),
   authorizationWindowForm: document.querySelector('.authorization-window-form'),
+<<<<<<< Updated upstream
   authorizationWindowSignButton: document.querySelectorAll('.authorization-window-sign-button'),
   
+=======
+>>>>>>> Stashed changes
   // authorizationWindowInput: document.querySelector(
   //   ".authorization-window-input"
   // ),
@@ -36,6 +39,7 @@ const refs = {
   //   guard: document.querySelector(".guard"),
 };
 
+<<<<<<< Updated upstream
 // refs.authorizationWindowSubmitButton,
 //   addEventListener('submit', e => {
 //     e.preventDefault();
@@ -44,6 +48,16 @@ const refs = {
 //     console.log(refs.authorizationWindowForm.elements.email.value);
 //     console.log(refs.authorizationWindowForm.elements.password.value);
 //   });
+=======
+refs.authorizationWindowSubmitButton,
+  addEventListener('submit', e => {
+    e.preventDefault();
+    // console.log(refs.authorizationWindowForm);
+    console.log(refs.authorizationWindowForm.elements.name.value);
+    console.log(refs.authorizationWindowForm.elements.email.value);
+    console.log(refs.authorizationWindowForm.elements.password.value);
+  });
+>>>>>>> Stashed changes
 
 let thema = true;
 // refs.buttonSwitch.addEventListener("click", () => {
@@ -62,6 +76,7 @@ let thema = true;
 //   console.log(el.classList);
 //   el.classList.toggle("dark");
 // });
+<<<<<<< Updated upstream
 
 // function changeThema() { 
   if (localStorage.theme === 'dark'){
@@ -121,5 +136,35 @@ refs.buttonSwitch.addEventListener('click', () => {
     refs.body.style.color = '#d0d0d0';
     refs.body.style.backgroundColor = '#111111';    
     localStorage.setItem('theme', 'dark');    
+=======
+refs.buttonSwitch.addEventListener('click', () => {
+  refs.headerImgLight.classList.toggle('visually-hidden');
+  refs.headerImgDark.classList.toggle('visually-hidden');
+  refs.header.classList.toggle('dark');
+  refs.buttonSwitch.classList.toggle('dark');
+  refs.knobsBig.classList.toggle('dark');
+  refs.knobsMedium.classList.toggle('dark');
+  refs.knobsSmall.classList.toggle('dark');
+  refs.authorizationWindow.classList.toggle('dark');
+  refs.authorizationWindowInput.forEach(el => {
+    el.classList.toggle('dark');
+  });
+  refs.authorizationWindowCloseButtonIcon.classList.toggle('dark');
+  refs.authorizationWindowIcon.forEach(el => {
+    el.classList.toggle('dark');
+  });
+  refs.authorizationWindowSubmitButton.classList.toggle('dark');
+  refs.signUpButton.classList.toggle('dark');
+  refs.signInButton.classList.toggle('dark');
+
+  if (thema) {
+    refs.body.style.color = '#d0d0d0';
+    refs.body.style.backgroundColor = '#111111';
+    thema = false;
+  } else {
+    refs.body.style.color = '#111111';
+    refs.body.style.backgroundColor = '#d0d0d0';
+    thema = true;
+>>>>>>> Stashed changes
   }
 });
