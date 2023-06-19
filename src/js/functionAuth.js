@@ -377,14 +377,12 @@ const password = `${refs.authorizationWindowForm.elements.password.value}`;
         console.log("User is signed in.");        
         refs.signInButton.textContent = "sign out";
         refs.deleteUserButton.disabled = false;
-        // return "User is signed in.";
+        
       } else {
         // User is signed out.
-        console.log("User is signed out.");
-        nameSignInBtn = "sign in";
+        console.log("User is signed out.");        
         refs.signInButton.textContent = "sign in";
-        refs.deleteUserButton.disabled = true;
-        // return "User is signed out.";    
+        refs.deleteUserButton.disabled = true;            
       }    
     });    
   } 
