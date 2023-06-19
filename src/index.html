@@ -43,7 +43,7 @@
           </ul>
         </nav>
         <div class="header-btn">
-          <button type="button" class="btn-switch">
+          <button type="button" class="btn-switch" id="toggle-button">
             <div class="knobs-big"></div>
             <div class="knobs-medium"></div>
             <div class="knobs-small"></div>
@@ -60,7 +60,7 @@
       </div>
     </header>
     <!-- /site header section -->
-
+    <div id="firebaseui-auth-container" class="auth-container"></div>
     <!-- authorization window -->
     <div class="authorization-backdrop is-hidden" data-authorization>
       <div class="authorization-window">
@@ -79,7 +79,7 @@
         </button>
 
         <form class="authorization-window-form js-speaker-form">
-          <label class="authorization-window-label" for="name">
+          <!-- <label class="authorization-window-label" for="name">
             <div class="authorization-window-field">
               <input
                 class="authorization-window-input"
@@ -93,7 +93,7 @@
                 autofocus
               />
             </div>
-          </label>
+          </label> -->
 
           <label class="authorization-window-label" for="email">
             <div class="authorization-window-field">
@@ -119,6 +119,7 @@
                 name="user-password"
                 placeholder="password"
                 id="password"
+                autocomplete="off"                
                 required
               />
               <svg class="authorization-window-icon" width="28" height="28">
@@ -129,18 +130,33 @@
           <button class="authorization-window-submit-button" type="submit">
             Sign up
           </button>
-          <div class="authorization-window-sign-buttons">
-            <button class="authorization-window-sign-button up" type="button">
+          <!-- <button class="authorization-window-submit-button-in visually-hidden" type="submit">
+            Sign in
+          </button> -->
+          <ul class="authorization-window-sign-buttons list">
+            <li><button class="authorization-window-sign-button sign-up current" type="button">
               sign up
-            </button>
-            <button class="authorization-window-sign-button in" type="button">
+            </button></li>
+            <li><button class="authorization-window-sign-button sign-in" type="button">
               sign in
-            </button>
-          </div>
+            </button></li>
+            <!-- <li><button class="authorization-window-sign-button sign-out" type="button">
+              sign out
+            </button></li> -->
+            <li><button class="authorization-window-sign-button password-reset" type="button">
+              password reset
+            </button></li>
+            <li><button class="authorization-window-sign-button delete-user" type="button">
+              delete user
+            </button></li>
+          </ul>
         </form>
       </div>
     </div>
     <!-- /authorization window -->
+    <!-- <script type="module" src="./js/testAuth.js"></script>
+    <script type="module" src="./js/jsFirebaseAuth.js"></script> -->
+    <script type="module" src="./js/functionAuth.js"></script>
     <script type="module" src="./js/authorization.js"></script>
     <script type="module" src="./index.js"></script>
   </body>

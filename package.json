@@ -1,7 +1,7 @@
 {
-  "name": "team-project-my-test",
+  "name": "c",
   "version": "2.0.0",
-  "description": "",
+  "description": "Этот проект был создан при помощи Parcel. Для знакомства и настройки\r дополнительных возможностей [обратись к документации](https://parceljs.org/).",
   "homepage": "https://go-to-stars.github.io/team-project-my-test",
   "scripts": {
     "start": "parcel src/*.html",
@@ -12,7 +12,7 @@
     "url": "git+https://github.com/go-to-stars/team-project-my-test.git"
   },
   "keywords": [],
-  "author": "",
+  "author": "Ivan",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/go-to-stars/team-project-my-test/issues"
@@ -20,13 +20,16 @@
   "dependencies": {
     "firebase": "^9.22.2",
     "firebaseui": "^6.0.2",
-    "modern-normalize": "^1.1.0"
+    "modern-normalize": "^1.1.0",
+    "notiflix": "^3.2.6"
   },
   "devDependencies": {
     "@parcel/transformer-sass": "^2.6.0",
     "parcel": "^2.6.0",
     "parcel-reporter-clean-dist": "^1.0.4",
-    "posthtml-include": "^1.7.4"
+    "posthtml-include": "^1.7.4",
+    "process": "^0.11.10"
   },
-  "browserslist": "> 0.5%, last 2 versions, not dead"
+  "browserslist": "> 0.5%, last 2 versions, not dead",
+  "main": "index.js"
 }

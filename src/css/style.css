@@ -313,6 +313,7 @@ img {
   position: absolute;
   top: 50%;
   left: 50%;
+  width: 579px;
   transform: translate(-50%, -50%);
 
   padding: 80px 40px 40px;
@@ -495,6 +496,7 @@ img {
 
   letter-spacing: -0.01em;
   text-transform: uppercase;
+  cursor: pointer;
 }
 
 .authorization-window-submit-button.dark {
@@ -512,6 +514,7 @@ img {
   align-items: center;
   justify-content: center;
   gap: 20px;
+  padding-left: 0;
 }
 
 .authorization-window-sign-button {
@@ -524,17 +527,61 @@ img {
   letter-spacing: -0.01em;
   text-transform: uppercase;
 
+  color: rgba(17, 17, 17, 0.5);
+  /* background-color: #f6f6f6; */
+  background-color: transparent;
+
   border: none;
+  cursor: pointer;
 }
 
-.up {
+.authorization-window-sign-button.dark {
+  color: #f6f6f6;  
+}
+
+
+.sign-up {
+}
+.sign-in {
+}
+/* .sign-out {
+} */
+.password-reset {
+}
+.delete-user {
+}
+
+.sign-up, .sign-in, .password-reset, .delete-user  {
+  border: 2px solid transparent;
+  border-radius: 40px;
+  padding: 5px 10px;
+}
+
+.sign-up:focus, .sign-in:focus, .password-reset:focus, .delete-user:focus, .sign-up:hover, .sign-in:hover, .password-reset:hover, .delete-user:hover  {
+  border: 2px solid rgba(17, 17, 17, 0.5);
+}
+
+.sign-up.dark:focus, .sign-in.dark:focus, .password-reset.dark:focus, .delete-user.dark:focus, .sign-up.dark:hover, .sign-in.dark:hover, .password-reset.dark:hover, .delete-user.dark:hover  {
+  border: 2px solid #f6f6f6;
+}
+
+.current, .current.dark {
   text-decoration-line: underline;
 
   color: #4f2ee8;
-  background-color: #f6f6f6;
+  background-color: transparent;
+  border: 2px solid transparent;
+  border-radius: 40px;
+  padding: 5px 10px;
+  
 }
 
-.up.dark {
+.current:focus, .current.dark:focus, .current:hover, .current.dark:hover {
+  border: 2px solid #4f2ee8;
+}
+
+
+/* .current.dark {
   background-color: #202024;
 }
 
@@ -546,7 +593,7 @@ img {
 .in.dark {
   color: #f6f6f6;
   background-color: #202024;
-}
+} */
 
 /* =================== /authorization-window section =================== */
 
