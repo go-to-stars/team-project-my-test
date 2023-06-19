@@ -1,7 +1,7 @@
 {
   "name": "c",
   "version": "2.0.0",
-  "description": "Этот проект был создан при помощи Parcel. Для знакомства и настройки\r дополнительных возможностей [обратись к документации](https://parceljs.org/).",
+  "description": "",
   "homepage": "https://go-to-stars.github.io/team-project-my-test",
   "scripts": {
     "start": "parcel src/*.html",
@@ -19,7 +19,6 @@
   },
   "dependencies": {
     "firebase": "^9.22.2",
-    "firebaseui": "^6.0.2",
     "modern-normalize": "^1.1.0",
     "notiflix": "^3.2.6"
   },
