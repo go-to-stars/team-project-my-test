@@ -54,11 +54,9 @@ refs.authorizationWindowForm.addEventListener('submit', e => {
     refs.authorizationWindowSubmitButton.textContent
       .trim()
       .toLocaleLowerCase() === 'sign up'
-  ) {
-    console.log('case sign up1');
+  ) {    
     signUpWithEmailPassword();    
-  } else {
-    console.log('case sign in1');
+  } else {    
     onSignIn();    
   }
 }); // слухач "submit"у форми авторизації
