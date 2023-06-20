@@ -20,7 +20,7 @@ import { initializeApp } from 'firebase/app'; // імпорт функції "in
 import { getAuth } from 'firebase/auth'; // імпорт функції "getAuth"
 import { getAuth, createUserWithEmailAndPassword } from 'firebase/auth'; // імпорт функції "createUserWithEmailAndPassword"
 import { getAuth, signInWithEmailAndPassword } from 'firebase/auth'; // імпорт функції "signInWithEmailAndPassword"
-import { getAuth, signUpWithEmailPassword } from 'firebase/auth';
+// import { getAuth, signUpWithEmailPassword } from 'firebase/auth';
 
 const firebaseConfig = {
   apiKey: 'AIzaSyAb7qX9rlncTGJ67DqxnbFRQ3lMV1rBMms',
@@ -56,12 +56,10 @@ refs.authorizationWindowForm.addEventListener('submit', e => {
       .toLocaleLowerCase() === 'sign up'
   ) {
     console.log('case sign up1');
-    signUpWithEmailPassword();
-    console.log('case sign up2');
+    signUpWithEmailPassword();    
   } else {
     console.log('case sign in1');
-    onSignIn();
-    console.log('case sign in2');
+    onSignIn();    
   }
 }); // слухач "submit"у форми авторизації
 
