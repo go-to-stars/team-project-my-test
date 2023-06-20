@@ -69,8 +69,8 @@ const refs = {
     el.classList.add('dark');
   });
   refs.authorizationWindowSubmitButton.classList.add('dark');
-  // refs.signUpButton.classList.add('dark');
-  // refs.signInButton.classList.add('dark');
+  refs.signUpButton.classList.add('dark');
+  refs.signInButton.classList.add('dark');
 
 } 
 // }
