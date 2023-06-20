@@ -48,9 +48,30 @@
             <div class="knobs-medium"></div>
             <div class="knobs-small"></div>
           </button>
-          <button type="button" class="btn-login" data-authorization-open>
+          <button type="button" class="btn-login btn" data-authorization-open>
             <div class="btn-login-content">
               <p class="btn-login-text">Sign up</p>
+              <svg class="btn-login-img" width="20" height="20">
+                <use href="./img/icons/icons.svg#icon-arrow-right"></use>
+              </svg>
+            </div>
+          </button>
+          <button type="button" class="btn-signed btn visually-hidden">
+            <div class="btn-login-content">
+              <img
+                class="btn-signed-img"
+                src="./img/icons/photo-user.png"
+                alt="photo-user"
+              />
+              <p class="btn-login-text-signed">Waleraw</p>
+              <svg class="btn-login-img" width="23" height="26">
+                <use href="./img/icons/icons.svg#icon-fi-ss-caret-down"></use>
+              </svg>
+            </div>
+          </button>
+          <button type="button" class="btn-logout">
+            <div class="btn-login-content">
+              <p class="btn-login-text">Log out</p>
               <svg class="btn-login-img" width="20" height="20">
                 <use href="./img/icons/icons.svg#icon-arrow-right"></use>
               </svg>
@@ -60,7 +81,7 @@
       </div>
     </header>
     <!-- /site header section -->
-    <div id="firebaseui-auth-container" class="auth-container"></div>
+    
     <!-- authorization window -->
     <div class="authorization-backdrop is-hidden" data-authorization>
       <div class="authorization-window">
@@ -77,9 +98,8 @@
             <use href="./img/icons/icons.svg#icon-x-close"></use>
           </svg>
         </button>
-
         <form class="authorization-window-form js-speaker-form">
-          <label class="authorization-window-label" for="name">
+          <label class="authorization-window-label">
             <div class="authorization-window-field">
               <input
                 class="authorization-window-input"
@@ -88,14 +108,13 @@
                 placeholder="name"
                 id="name"
                 pattern="^[a-zA-Z]+"
-                minlength="2"
+                maxlength="7"
                 required
                 autofocus
               />
             </div>
           </label>
-
-          <label class="authorization-window-label" for="email">
+          <label class="authorization-window-label">
             <div class="authorization-window-field">
               <input
                 class="authorization-window-input"
@@ -110,8 +129,7 @@
               </svg>
             </div>
           </label>
-
-          <label class="authorization-window-label" for="password">
+          <label class="authorization-window-label">
             <div class="authorization-window-field">
               <input
                 class="authorization-window-input"
@@ -129,10 +147,7 @@
           </label>
           <button class="authorization-window-submit-button" type="submit">
             Sign up
-          </button>
-          <!-- <button class="authorization-window-submit-button-in visually-hidden" type="submit">
-            Sign in
-          </button> -->
+          </button>          
           <ul class="authorization-window-sign-buttons list">
             <li>
               <button
@@ -149,31 +164,13 @@
               >
                 sign in
               </button>
-            </li>
-            <!-- <li><button class="authorization-window-sign-button sign-out" type="button">
-              sign out
-            </button></li> -->
-            <!-- <li>
-              <button
-                class="authorization-window-sign-button password-reset"
-                type="button"
-              >
-                password reset
-              </button>
-            </li>
-            <li>
-              <button
-                class="authorization-window-sign-button delete-user"
-                type="button"
-              >
-                delete user
-              </button>
-            </li> -->
+            </li>            
           </ul>
         </form>
       </div>
     </div>
     <!-- /authorization window -->
+    
     <script type="module" src="./js/functionAuth.js"></script>
     <script type="module" src="./js/authorization.js"></script>
     <script type="module" src="./index.js"></script>
