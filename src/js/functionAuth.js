@@ -314,7 +314,7 @@ window.addEventListener('load', () => {
 // - - - - - - - - -  - - - - - - /функції авторизації - - - - - - - - - - - - - - -
 /* =========================== /authorization-window section =========================== */
 
-import { doc, getFirestore, setDoc, getDoc, addDoc } from "firebase/firestore";
+import { doc, getFirestore, setDoc, getDoc } from "firebase/firestore";
 import { doc, updateDoc, arrayUnion, arrayRemove } from "firebase/firestore";
 
 refs.writeButton.addEventListener("click", ()=>{
