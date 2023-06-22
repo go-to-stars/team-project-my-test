@@ -35,10 +35,9 @@ const refs = {
     reedButton: document.querySelector('#reed-button'), // потім видалить
     reedButton2: document.querySelector('#reed-button2'), // потім видалить
     authorizationId: document.querySelector('.authorization-id'), // потім видалить
-}; // масив посилань  
-console.log(refs.authorizationId);
+}; // масив посилань
 
-let user = "";
+let user = ""; // uid користувача
 
 // - - - - - - - - - - - - - - - зміна теми вікна авторизації - - - - - - - - - - - - - - -
 if (localStorage.theme === 'dark') {
@@ -157,7 +156,7 @@ function signUpWithEmailPassword() {
         Notify.success(
           `User ${name} with email address ${email} successfully created!`
         ); // повідомлення про успішну операцію авторизації
-        writeUserName(name); // запис імені користувача до бази
+        writeUserName(name); // запис імені користувача до бази даних
         // ...
       })
       .catch(error => {
@@ -203,7 +202,7 @@ function onSignIn() {
       .then(userCredential => {
         // Signed in
         user = userCredential.user; // авторизований користувач  
-        console.log(user.uid); 
+        // console.log(user.uid); 
         userID = user.uid;    
         refs.btnLogin.classList.add('visually-hidden'); // приховати кнопку "Sign up"
         refs.btnSigned.classList.remove('visually-hidden'); // показати кнопку "User"
@@ -219,7 +218,7 @@ function onSignIn() {
           const res = JSON.parse(val); // розпарсити відповідь з бази даних                   
           const nameUser = res.name; // і'мя користувача з бази даних
           const idBook = res["id-book"]; // масив id книжок з бази даних        
-          console.log(idBook);
+          // console.log(idBook);
           refs.btnLoginTextSigned.textContent = nameUser; // записати і'мя користувача з бази даних в кнопку користувача
         })
         // ...
@@ -298,12 +297,12 @@ function initApp() {
       // User is signed in.
       // refs.headerNav.classList.remove('visually-hidden'); // показати кнопки "Home" та "ShoppingList"
       refs.headerList.classList.remove('visually-hidden'); // показати кнопки "Home" та "ShoppingList"
-      console.log('User is signed in.');
+      // console.log('User is signed in.');
     } else {
       // User is signed out.
       // refs.headerNav.classList.add('visually-hidden'); // приховати кнопки "Home" та "ShoppingList"
       refs.headerList.classList.add('visually-hidden'); // приховати кнопки "Home" та "ShoppingList"
-      console.log('User is signed out.');
+      // console.log('User is signed out.');
     } // якщо слухач авторизований то повідомлення "Користувач авторизований" та показати кнопки, інакше повідомлення "Користувач не авторизований" та приховати кнопки
   });
 } // ініціалізація застосунку. Додається слухач, який відслідковує зміну ствну авторизації користувача
@@ -312,8 +311,8 @@ window.addEventListener('load', () => {
   initApp();
 }); // при завершенні завантаження всіх елементів "window" запускається функція ініціалізації застосунку
 // - - - - - - - - -  - - - - - - /функції авторизації - - - - - - - - - - - - - - -
-/* =========================== /authorization-window section =========================== */
 
+// - - - - - - - - -  - - - - - - функції роботи з БД - - - - - - - - - - - - - - -
 import { doc, getFirestore, setDoc, getDoc } from "firebase/firestore";
 import { doc, updateDoc, arrayUnion, arrayRemove } from "firebase/firestore";
 
@@ -380,3 +379,5 @@ async function reedBookID () {
     };    
     export let userID;
 
+// - - - - - - - - -  - - - - - - /функції роботи з БД - - - - - - - - - - - - - - -
+/* =========================== /authorization-window section =========================== */
