@@ -147,7 +147,8 @@ function signUpWithEmailPassword() {
       .then(userCredential => {
         // Signed in
         user = userCredential.user; // авторизований користувач 
-        console.log(user.uid);        
+        console.log(user.uid);
+        userID = user.uid;        
         refs.btnLogin.classList.add('visually-hidden'); // приховати кнопку "Sign up"
         refs.btnSigned.classList.remove('visually-hidden'); // показати кнопку "User"
         refs.btnLoginTextSigned.textContent = name; // записати в кнопку "User" і'мя користувача
@@ -202,7 +203,8 @@ function onSignIn() {
       .then(userCredential => {
         // Signed in
         user = userCredential.user; // авторизований користувач  
-        console.log(user.uid);      
+        console.log(user.uid); 
+        userID = user.uid;    
         refs.btnLogin.classList.add('visually-hidden'); // приховати кнопку "Sign up"
         refs.btnSigned.classList.remove('visually-hidden'); // показати кнопку "User"
         // refs.btnLoginTextSigned.textContent = name; // записати в кнопку "User" і'мя користувача
@@ -345,10 +347,10 @@ await updateDoc( doc(firestore, "books", `${user.uid}`), {
 async function reedBookID () {
   try {
     const mySnapshot = await getDoc( doc(firestore, "books", `${user.uid}`));
-    console.log(`${user.uid}`);    
+    // console.log(`${user.uid}`);    
     if (mySnapshot.exists()) {
       const docData = mySnapshot.data();      
-      console.log(`My data is ${JSON.stringify(docData)}`);
+      // console.log(`My data is ${JSON.stringify(docData)}`);
       return JSON.stringify(docData);
         } else {
       // docSnap.data() will be undefined in this case
@@ -371,3 +373,11 @@ async function reedBookID () {
         console.log(`I got an error! ${error}`);
       }  
     } // при створенні користувача робимо запис його "uid" та імені в БД 
+
+    export {
+      addBookID,
+      dellBookID,
+      reedBookID,      
+    };    
+    export let userID;
+
