@@ -320,9 +320,8 @@ import { doc, updateDoc, arrayUnion, arrayRemove } from "firebase/firestore";
 refs.writeButton.addEventListener("click", ()=>{
 addBookID(refs.authorizationId.value)
 }
-  );     
-
-refs.reedButton.addEventListener("click", ()=>{dellBookID(refs.authorizationId.value)});
+  );
+  refs.reedButton.addEventListener("click", ()=>{dellBookID(refs.authorizationId.value)});
 refs.reedButton2.addEventListener("click", ()=>{reedBookID()});
 
 const firestore = getFirestore(app);
