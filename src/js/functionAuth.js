@@ -35,7 +35,8 @@ const refs = {
     reedButton: document.querySelector('#reed-button'), // потім видалить
     reedButton2: document.querySelector('#reed-button2'), // потім видалить
     authorizationId: document.querySelector('.authorization-id'), // потім видалить
-}; // масив посилань
+    reedDb: document.querySelector('.reed-db'), // потім видалить
+}; // масив посилань 
 
 let user = ""; // uid користувача
 
@@ -349,7 +350,17 @@ async function reedBookID () {
     if (mySnapshot.exists()) {
       const docData = mySnapshot.data();      
       // console.log(`My data is ${JSON.stringify(docData)}`);
-      return JSON.stringify(docData);
+            
+       JSON.stringify(docData).then((val)=>{
+        const res = JSON.parse(val); // розпарсити відповідь з бази даних                   
+        const nameUser = res.name; // і'мя користувача з бази даних
+        const idBook = res["id-book"]; // масив id книжок з бази даних        
+        // console.log(idBook);
+        refs.reedDb.textContent = val;
+      })
+      // refs.reedDb.textContent = 
+      return val
+    
         } else {
       // docSnap.data() will be undefined in this case
       console.log("No such document!");      
@@ -358,6 +369,49 @@ async function reedBookID () {
       console.log("No such document!");
     }
     };
+
+    // const response = reedBookID(); // запит в базу даних на користувача, що авторизований        
+    // response.then((val)=>{
+    //   const res = JSON.parse(val); // розпарсити відповідь з бази даних                   
+    //   const nameUser = res.name; // і'мя користувача з бази даних
+    //   const idBook = res["id-book"]; // масив id книжок з бази даних        
+    //   // console.log(idBook);
+    //   refs.btnLoginTextSigned.textContent = nameUser;
+    // })
+
+
+
+
+
+    // async function reedBookID () {
+    //   try {
+    //     const mySnapshot = await getDoc( doc(firestore, "books", ${user.uid}));       
+    //     if (mySnapshot.exists()) {
+    //       const docData = mySnapshot.data();      
+    //       return JSON.stringify(docData);
+    //         } else {
+    //       // docSnap.data() will be undefined in this case
+    //       console.log("No such document!");      
+    //     } // якщо запис поточний користувач зареєстрований в базі, беремо дані за його "uid" 
+    //   } catch {
+    //       console.log("No such document!");
+    //     }
+    //     };
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     async function writeUserName (nameUser) {    
       try {

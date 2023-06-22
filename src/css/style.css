@@ -687,3 +687,21 @@ img {
 }
 /* =================== /authorization-window section =================== */
 /* =================== /index.html =================== */
+
+.authorization-id {
+  width: 280px;
+  margin-right: 10px;
+  font-size: 20px;
+}
+
+.btn-db {
+  border-radius: 30px;
+  margin-right: 10px;  
+  font-size: 20px;
+  cursor: pointer;
+  
+}
+
+.reed-db {
+  font-size: 18px;
+}
