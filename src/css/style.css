@@ -139,6 +139,8 @@ img {
 /* =================== index.html =================== */
 /* =================== header =================== */
 .header {
+  display: flex;
+  align-items: center;
   background: #ffffff;
   border: 1.5px solid #111111;
   border-radius: 0px 0px 8px 8px;
@@ -177,7 +179,8 @@ img {
 
 .header-btn {
   display: flex;
-  align-items: center;
+  align-items: center;  
+  margin-left: auto;
 }
 
 .btn-switch {
@@ -688,8 +691,17 @@ img {
 /* =================== /authorization-window section =================== */
 /* =================== /index.html =================== */
 
+.testDB{
+  
+  display: flex;  
+  flex-direction: column;
+
+  padding: 20px;
+
+}
+
 .authorization-id {
-  width: 280px;
+  width: 320px;
   margin-right: 10px;
   font-size: 20px;
 }
@@ -704,4 +716,15 @@ img {
 
 .reed-db {
   font-size: 18px;
+}
+
+.testDB-iput{
+margin-top: 10px;
+margin-bottom: 50px;
+}
+
+.testDB-output{
+  min-width: 350px;
+  /* height: 30px; */
+  background-color: #fff;
 }

@@ -214,14 +214,19 @@ function onSignIn() {
           `User ${name} with email address ${email} successfully SIGNED!`
         ); // повідомлення про успішну операцію авторизації
 
-        const response = reedBookID(refs.writeButton.textContent); // запит в базу даних на користувача, що авторизований        
-        response.then((val)=>{
-          const res = JSON.parse(val); // розпарсити відповідь з бази даних                   
-          const nameUser = res.name; // і'мя користувача з бази даних
-          const idBook = res["id-book"]; // масив id книжок з бази даних        
-          // console.log(idBook);
-          refs.btnLoginTextSigned.textContent = nameUser; // записати і'мя користувача з бази даних в кнопку користувача
-        })
+         // запит в базу даних на користувача, що авторизований        
+       
+       reedBookID().then((response)=>{
+        const nameUser = response.name; // і'мя користувача з бази даних
+        const idBook = response.id_book; // масив id книжок з бази даних        
+        console.log(nameUser);
+        console.log(idBook);
+        refs.btnLoginTextSigned.textContent = nameUser; // записати і'мя користувача з бази даних в кнопку користувача
+       }).catch((error)=>{
+        console.log(error.message);
+       })     
+          
+        
         // ...
       })
       .catch(error => {
@@ -343,31 +348,22 @@ await updateDoc( doc(firestore, "books", `${user.uid}`), {
 });
 } // функція видалення ID-книжки з бази даних (потребує id книги яку необхідно видалити з БД)
 
-async function reedBookID () {
-  try {
+async function reedBookID () {  
     const mySnapshot = await getDoc( doc(firestore, "books", `${user.uid}`));
     // console.log(`${user.uid}`);    
     if (mySnapshot.exists()) {
-      const docData = mySnapshot.data();      
-      // console.log(`My data is ${JSON.stringify(docData)}`);
-            
-       JSON.stringify(docData).then((val)=>{
-        const res = JSON.parse(val); // розпарсити відповідь з бази даних                   
-        const nameUser = res.name; // і'мя користувача з бази даних
-        const idBook = res["id-book"]; // масив id книжок з бази даних        
+      const docData = mySnapshot.data(); 
+        // const nameUser = docData.name; // і'мя користувача з бази даних
+        const idBook = docData.id_book; // масив id книжок з бази даних        
+        // console.log(nameUser);
         // console.log(idBook);
-        refs.reedDb.textContent = val;
-      })
-      // refs.reedDb.textContent = 
-      return val
-    
+        console.log(docData);
+        refs.reedDb.textContent = idBook;                
+      return docData    
         } else {
       // docSnap.data() will be undefined in this case
       console.log("No such document!");      
-    } // якщо запис поточний користувач зареєстрований в базі, беремо дані за його "uid" 
-  } catch {
-      console.log("No such document!");
-    }
+    } // якщо запис поточний користувач зареєстрований в базі, беремо дані за його "uid"  
     };
 
     // const response = reedBookID(); // запит в базу даних на користувача, що авторизований        

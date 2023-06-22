@@ -43,22 +43,8 @@
           </ul>
         </nav>
         
-    </div>
-    
-        <div class="header-btn">
-          <input
-        class="authorization-id"
-        type="text"
-        name="id"
-        placeholder="id book"
-        id="name"        
-      />
-        <button type="button" class="btn-db" id="write-button">write                   
-        </button>
-        <button type="button" class="btn-db" id="reed-button">delete                  
-        </button>
-        <button type="button" class="btn-db" id="reed-button2">reed                   
-        </button>
+    </div>    
+        <div class="header-btn">          
           <button type="button" class="btn-switch" id="toggle-button">
             <div class="knobs-big"></div>
             <div class="knobs-medium"></div>
@@ -92,13 +78,36 @@
                 <use href="./img/icons/icons.svg#icon-arrow-right"></use>
               </svg>
             </div>
-          </button>
-          <p class="reed-db"></p>
+          </button>          
         </div>
       </div>
     </header>
     <!-- /site header section -->
-    
+
+    <section class="testDB">
+      <h2 class="testDB-title">Демонстрація можливостей читання/запису з/в бази даних Cloud Firestore</h2>
+      <div class="testDB-iput">
+      <input
+        class="authorization-id"
+        type="text"
+        name="id"
+        placeholder="id book iput"
+        id="name"        
+      />
+      <button type="button" class="btn-db" id="write-button">write                   
+      </button>
+      <button type="button" class="btn-db" id="reed-button">delete                  
+      </button>
+      <button type="button" class="btn-db" id="reed-button2">reed                   
+      </button>
+    </div>
+    <p class="reed-db-title">data from Cloud Firestore</p>
+      <div class="testDB-output">        
+        <p class="reed-db"></p>
+      </div>
+      
+    </section>
+
     <!-- authorization window -->
     <div class="authorization-backdrop is-hidden" data-authorization>
       <div class="authorization-window">
