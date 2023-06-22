@@ -342,6 +342,7 @@ img {
 }
 /* =================== /header =================== */
 
+
 /* =================== authorization-window section =================== */
 .authorization-backdrop {
   position: fixed;
@@ -352,7 +353,8 @@ img {
 
   background: var(--blue-hover-icon-color);
   opacity: 1;
-  /* transition: opacity var(--animation-hover-focus); */
+  transition: opacity var(--transition-property);
+  z-index: 999;
 }
 
 .is-hidden {
@@ -365,15 +367,13 @@ img {
   top: 50%;
   left: 50%;
   width: 579px;
-  transform: translate(-50%, -50%);
+  padding: 80px 40px 35px;  
 
-  padding: 80px 40px 35px;
-
-  /* transition: transform var(--animation-hover-focus); */
-
-  background-color: var(-background-color-main);
+  background-color: var(--background-color-main);
   border: 2px solid var(--main-text-color);
   border-radius: 18px;
+  transform: translate(-50%, -50%);
+  transition: transform var(--transition-property);
 }
 
 @media screen and (max-width: 767.98px) {
@@ -390,8 +390,8 @@ img {
 }
 
 .authorization-window.dark {
-  background-color: var(--background-color-dark);
-  border: 2px solid var(-background-color-main);
+  background-color: #202024;
+  border: 2px solid #f6f6f6;
 }
 
 .authorization-window-close-button {
@@ -404,9 +404,9 @@ img {
   padding: 0;
     
   border: none;
-  background-color: var(-background-color-main);
-  cursor: pointer;
-  /* transition: background-color var(--animation-hover-focus); */
+  background-color: var(--background-color-main);
+  cursor: pointer;  
+  transition: stroke var(--transition-property);
 }
 
 @media screen and (max-width: 767.98px) {
@@ -419,22 +419,18 @@ img {
 }
 
 .authorization-window-close-button.dark {
-  border-color: var(--background-color-dark);
-  background-color: var(--background-color-dark);
+  border-color: #202024;
+  background-color: #202024;
 }
 
-/* .authorization-window-close-button:hover,
-.authorization-window-close-button:focus {
-  background-color: var(--blue-hover-icon-color);
-} */
-
 .authorization-window-close-button-icon {
-  width: 100%;
-  height: 100%;
   display: block;
+  width: 100%;
+  height: 100%; 
+
   stroke: var(--main-text-color);
-  background-color: var(-background-color-main);
-  /* transition: fill var(--animation-hover-focus); */
+  background-color: var(--background-color-main); 
+  transition: stroke var(--transition-property); 
 }
 
 .authorization-window-close-button:hover
@@ -445,8 +441,8 @@ img {
 }
 
 .authorization-window-close-button-icon.dark {
-  stroke: var(-background-color-main);
-  background-color: var(--background-color-dark);
+  stroke: #f6f6f6;
+  background-color: #202024;
 }
 
 .authorization-window-label {
@@ -463,13 +459,12 @@ img {
 .authorization-window-field {
   position: relative;
   display: flex;
-  flex-direction: column;
-  /* margin-bottom: 8px; */
+  flex-direction: column; 
 }
 
 .authorization-window-input {
-  display: block;
-  /* height: 40px; */
+  display: block; 
+  height: 64px; 
   padding: 0;
   padding-left: 40px;
   margin-bottom: 28px;
@@ -477,49 +472,42 @@ img {
   font-weight: 700;
   font-size: 18px;
   line-height: calc(24 / 18);
-
-  letter-spacing: -0.01em;
-  /* text-transform: uppercase; */
+  letter-spacing: -0.01em;  
 
   color: var(--main-text-color);
-  background-color: transparent;
-  /* transition: border var(--animation-hover-focus); */
+  background-color: transparent;  
   outline: none;
-
-  /* width: 499px; */
-  height: 64px;
-
   border: 2px solid var(--main-text-color);
   border-radius: 40px;
+  transition: color var(--transition-property), background-color var(--transition-property);
 }
 
 @media screen and (max-width: 767.98px) {
   .authorization-window-input {
     height: 50px;
     margin-bottom: 24px;
+
     font-size: 16px;
     line-height: calc(18 / 16);
   }
 }
 
 .authorization-window-input.dark {
-  color: var(-background-color-main);
-  background-color: var(--background-color-dark);
-  border-color: var(-background-color-main);
+  color: #f6f6f6;
+  background-color: #202024;
+  border-color: #f6f6f6;
 }
 
 .authorization-window-input:focus,
-.authorization-window-input:hover {
-  /* border: 2px solid var(--blue-hover-icon-color); */
+.authorization-window-input:hover {  
   background-color: var(--blue-hover-icon-color);
-  color: var(-background-color-main);
+  color: var(--background-color-main);
 }
 
 .authorization-window-input::placeholder {
   font-weight: 700;
   font-size: 18px;
   line-height: calc(24 / 18);
-
   letter-spacing: -0.01em;
   text-transform: uppercase;
 
@@ -529,13 +517,14 @@ img {
 @media screen and (max-width: 767.98px) {
   .authorization-window-input::placeholder {
     height: 50px;
+
     font-size: 16px;
     line-height: calc(18 / 16);
   }
 }
 
 .authorization-window-input.dark::placeholder {
-  color: var(-background-color-main);
+  color: #f6f6f6;
 }
 
 .authorization-window-icon {
@@ -544,11 +533,10 @@ img {
   right: 16px;
 
   stroke: var(--main-text-color);
-  fill: var(-background-color-main);
-
-  /* transform: translateY(-50%);
-  transition: stroke var(--animation-hover-focus); */
-}
+  /* fill: var(--background-color-main);  */
+  fill: transparent; 
+  transition: stroke var(--transition-property), fill var(--transition-property); 
+} 
 
 @media screen and (max-width: 767.98px) {
   .authorization-window-icon {
@@ -558,59 +546,49 @@ img {
   }
 }
 
-/* .authorization-window-icon
-  &
-  .authorization-window-input:not(:placeholder-shown) {
-  stroke: transparent;
-  fill: transparent;
-} */
-
 .authorization-window-icon.dark {
-  stroke: var(-background-color-main);
-  fill: var(--main-text-color);
+  stroke: #f6f6f6;
+  fill: #111;
 }
 
 .authorization-window-input:focus + .authorization-window-icon,
-.authorization-window-input:hover + .authorization-window-icon {
-  stroke: var(--blue-hover-icon-color);
-  fill: transparent;
-}
+.authorization-window-input:hover + .authorization-window-icon {    
+    fill: var(--blue-hover-icon-color);    
+} 
 
 .authorization-window-submit-button {
+  height: 64px;
   margin-top: 12px;
   margin-bottom: 15px;
-  color: #f3f3f3;
-  background-color: var(--main-text-color);
   padding-left: 0px;
-
-  /* width: 499px; */
-  height: 64px;
-
-  border-radius: 40px;
-  /* transition: background-color var(--animation-hover-focus); */
 
   font-weight: 700;
   font-size: 18px;
   line-height: calc(24 / 18);
-
   letter-spacing: -0.01em;
   text-transform: uppercase;
+
+  color: #f3f3f3;
+  background-color: var(--main-text-color);
+  border-radius: 40px;  
   cursor: pointer;
+  transition: background-color var(--transition-property); 
 }
 
 @media screen and (max-width: 767.98px) {
   .authorization-window-submit-button {
+    height: 50px;
     margin-top: 0;
     margin-bottom: 9px;
-    height: 50px;
+    
     font-size: 16px;
     line-height: calc(18 / 16);
   }
 }
 
 .authorization-window-submit-button.dark {
-  color: var(--background-color-dark);
-  background-color: var(-background-color-main);
+  color: #202024;
+  background-color: #f6f6f6;
 }
 
 .authorization-window-submit-button:hover,
@@ -639,9 +617,9 @@ img {
 
   color: rgba(17, 17, 17, 0.5);  
   background-color: transparent;
-
   border: none;
   cursor: pointer;
+  transition: border var(--transition-property);
 }
 
 @media screen and (max-width: 767.98px) {
@@ -652,7 +630,7 @@ img {
 }
 
 .authorization-window-sign-button.dark {
-  color: var(-background-color-main);
+  color: #f6f6f6;
 }
 
 .sign-up,
@@ -662,6 +640,8 @@ img {
   border: 2px solid transparent;
   border-radius: 40px;
   padding: 5px 10px;
+
+  transition: border var(--transition-property);
 }
 
 .sign-up:focus,
@@ -683,18 +663,20 @@ img {
 .sign-in.dark:hover,
 .password-reset.dark:hover,
 .delete-user.dark:hover {
-  border: 2px solid var(-background-color-main);
+  border: 2px solid #f6f6f6;
 }
 
 .curr,
 .curr.dark {
+  padding: 5px 10px;
+
   text-decoration-line: underline;
 
   color: var(--blue-hover-icon-color);
   background-color: transparent;
   border: 2px solid transparent;
-  border-radius: 40px;
-  padding: 5px 10px;
+  border-radius: 40px;  
+  transition: border var(--transition-property);
 }
 
 .curr:focus,
@@ -704,5 +686,4 @@ img {
   border: 2px solid var(--blue-hover-icon-color);
 }
 /* =================== /authorization-window section =================== */
-
 /* =================== /index.html =================== */

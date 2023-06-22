@@ -1,4 +1,7 @@
+/* =========================== authorization-window section =========================== */
 const refs = {
+  buttonSwitch: document.querySelector('#toggle-button'),
+  headerNav: document.querySelector('#header-nav'),
   authorizationWindowInput: document.querySelectorAll(
     '.authorization-window-input'
   ),
@@ -6,6 +9,8 @@ const refs = {
     '.authorization-window-submit-button'
   ),
   authorizationWindowForm: document.querySelector('.authorization-window-form'),
+  openAuthorizationBtn: document.querySelector('[data-authorization-open]'),
+  closeAuthorizationBtn: document.querySelector('[data-authorization-close]'),
   authorization: document.querySelector('[data-authorization]'),
   signUpButton: document.querySelector('.sign-up'),
   signInButton: document.querySelector('.sign-in'),
@@ -13,14 +18,87 @@ const refs = {
   btnSigned: document.querySelector('.btn-signed'),
   btnLoginTextSigned: document.querySelector('.btn-login-text-signed'),
   btnLogout: document.querySelector('.btn-logout'),
-}; // масив посилань 
+  authorizationWindow: document.querySelector('.authorization-window'),
+  authorizationWindowCloseButtonIcon: document.querySelector(
+    '.authorization-window-close-button-icon'
+  ),
+  authorizationWindowIcon: document.querySelectorAll(
+    '.authorization-window-icon'
+  ),
+  headerList: document.querySelector(
+    '.header-list'),    
 
+    
+
+
+    writeButton: document.querySelector('#write-button'), // потім видалить    
+    reedButton: document.querySelector('#reed-button'), // потім видалить
+    reedButton2: document.querySelector('#reed-button2'), // потім видалить
+    authorizationId: document.querySelector('.authorization-id'), // потім видалить
+}; // масив посилань  
+console.log(refs.authorizationId);
+
+let user = "";
+
+// - - - - - - - - - - - - - - - зміна теми вікна авторизації - - - - - - - - - - - - - - -
+if (localStorage.theme === 'dark') {
+  refs.authorizationWindow.classList.add('dark');
+  refs.authorizationWindowInput.forEach(el => {
+    el.classList.add('dark');
+  });
+  refs.authorizationWindowCloseButtonIcon.classList.add('dark');
+  refs.authorizationWindowIcon.forEach(el => {
+    el.classList.add('dark');
+  });
+  refs.authorizationWindowSubmitButton.classList.add('dark');
+  refs.signUpButton.classList.add('dark');
+  refs.signInButton.classList.add('dark');
+} // зміна теми вікна авторизації на темну при старті
+
+refs.buttonSwitch.addEventListener('click', () => {
+  refs.authorizationWindow.classList.toggle('dark');
+  refs.authorizationWindowInput.forEach(el => {
+    el.classList.toggle('dark');
+  });
+  refs.authorizationWindowCloseButtonIcon.classList.toggle('dark');
+  refs.authorizationWindowIcon.forEach(el => {
+    el.classList.toggle('dark');
+  });
+  refs.authorizationWindowSubmitButton.classList.toggle('dark');
+  refs.signUpButton.classList.toggle('dark');
+  refs.signInButton.classList.toggle('dark');
+}); // зміна теми вікна авторизаці при натисканні на кнопку
+// - - - - - - - - - - - - - - - /зміна теми вікна авторизації - - - - - - - - - - - - - - -
+
+// - - - - - - - - - - - - - - - модальне вікно авторизації - - - - - - - - - - - - - - -
+(() => {
+  refs.openAuthorizationBtn.addEventListener('click', toggleAuthorization);
+  refs.closeAuthorizationBtn.addEventListener('click', toggleAuthorization);
+
+  function toggleAuthorization() {
+    const isAuthorizationOpen =
+      refs.openAuthorizationBtn.getAttribute('aria-expanded') === 'true' ||
+      false;
+    refs.openAuthorizationBtn.setAttribute(
+      'aria-expanded',
+      !isAuthorizationOpen
+    );
+    refs.authorization.classList.toggle('is-hidden');
+
+    const scrollLockMethod = !isAuthorizationOpen
+      ? (document.body.style.overflow = 'hidden')
+      : (document.body.style.overflow = 'scroll');
+    // bodyScrollLock[scrollLockMethod](document.body);
+  }
+})(); // відкриття/закриття вікна авторизації та блокування скролу
+// - - - - - - - - - - - - - - - /модальне вікно авторизації - - - - - - - - - - - - - - -
+
+// - - - - - - - - - - - - -  - - функції авторизації - - - - - - - - - - - - - - -
 import { Notify } from 'notiflix/build/notiflix-notify-aio'; // імпорт бібліотеки notiflix
 import { initializeApp } from 'firebase/app'; // імпорт функції "initializeApp"
 import { getAuth } from 'firebase/auth'; // імпорт функції "getAuth"
 import { getAuth, createUserWithEmailAndPassword } from 'firebase/auth'; // імпорт функції "createUserWithEmailAndPassword"
 import { getAuth, signInWithEmailAndPassword } from 'firebase/auth'; // імпорт функції "signInWithEmailAndPassword"
-// import { getAuth, signUpWithEmailPassword } from 'firebase/auth';
 
 const firebaseConfig = {
   apiKey: 'AIzaSyAb7qX9rlncTGJ67DqxnbFRQ3lMV1rBMms',
@@ -35,29 +113,26 @@ const app = initializeApp(firebaseConfig); // ініціалізація зас�
 
 refs.signUpButton.addEventListener('click', () => {
   refs.authorizationWindowSubmitButton.textContent = 'sign up';
-  refs.signUpButton.classList.add('current');
-  refs.signInButton.classList.remove('current');
+  refs.signUpButton.classList.add('curr');
+  refs.signInButton.classList.remove('curr');
 }); // слухач події натискання на кнопку "sign up"
 
 refs.signInButton.addEventListener('click', () => {
   refs.authorizationWindowSubmitButton.textContent = 'sign in';
-  refs.signUpButton.classList.remove('current');
-  refs.signInButton.classList.add('current');
+  refs.signUpButton.classList.remove('curr');
+  refs.signInButton.classList.add('curr');
 }); // слухач події натискання на кнопку "sign in"
 
-// import { User } from 'firebase/auth';
-const auth = getAuth(app);
+const auth = getAuth(app); // повертаємо в змінну "auth" екземпляр Auth, пов’язаний із наданим @firebase застосунком
 
 refs.authorizationWindowForm.addEventListener('submit', e => {
   e.preventDefault(); // блокування дій браузера за замовчуванням
   if (
-    refs.authorizationWindowSubmitButton.textContent
-      .trim()
-      .toLocaleLowerCase() === 'sign up'
-  ) {    
-    signUpWithEmailPassword();    
-  } else {    
-    onSignIn();    
+    refs.authorizationWindowSubmitButton.textContent.trim().toLowerCase() === 'sign up'
+  ) {
+    signUpWithEmailPassword();
+  } else {
+    onSignIn();
   }
 }); // слухач "submit"у форми авторизації
 
@@ -65,81 +140,113 @@ function signUpWithEmailPassword() {
   const name = `${refs.authorizationWindowForm.elements.name.value}`;
   const email = `${refs.authorizationWindowForm.elements.email.value}`;
   const password = `${refs.authorizationWindowForm.elements.password.value}`;
-  // [START auth_signup_password]
-  // const { getAuth, createUserWithEmailAndPassword } = require('firebase/auth');
-  console.log(name);
-  // const auth = getAuth();
-  createUserWithEmailAndPassword(auth, email, password)
-    .then(userCredential => {
-      // Signed in
-      const user = userCredential.user;
-      refs.btnLogin.classList.add('visually-hidden');
-      refs.btnSigned.classList.remove('visually-hidden');
-      refs.btnLoginTextSigned.textContent = name;
-      refs.authorization.classList.toggle('is-hidden');
-      refs.authorizationWindowForm.reset();
-      Notify.success(
-        `User ${name} with email address ${email} successfully created!`
-      );
-      // ...
-    })
-    .catch(error => {
-      const errorCode = error.code;
-      const errorMessage = error.message;
-      console.log(errorCode);
-      console.log(errorMessage);
-      // ..
-    });
+
+  // [START auth_signup_password]  
+  try {
+    createUserWithEmailAndPassword(auth, email, password)
+      .then(userCredential => {
+        // Signed in
+        user = userCredential.user; // авторизований користувач 
+        console.log(user.uid);        
+        refs.btnLogin.classList.add('visually-hidden'); // приховати кнопку "Sign up"
+        refs.btnSigned.classList.remove('visually-hidden'); // показати кнопку "User"
+        refs.btnLoginTextSigned.textContent = name; // записати в кнопку "User" і'мя користувача
+        refs.authorization.classList.toggle('is-hidden'); // приховати вікно авторизації
+        refs.authorizationWindowForm.reset(); // очистити форму
+        Notify.success(
+          `User ${name} with email address ${email} successfully created!`
+        ); // повідомлення про успішну операцію авторизації
+        writeUserName(name); // запис імені користувача до бази
+        // ...
+      })
+      .catch(error => {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        // console.log(errorCode);
+        // console.log(errorMessage);
+
+        if (errorCode === 'auth/wrong-password') {
+          Notify.failure(`Wrong password.`); // повідомлення про невірний пароль
+        } else if (errorCode === 'auth/email-already-in-use') {
+          Notify.failure(`User with this email ${email} already in use.`); // повідомлення про невірний пароль
+        } else {
+          Notify.failure(`${errorMessage}`); // повідомлення з текстом помилки
+        }
+        console.log(error);
+        // ..
+      });
+  } catch (error) {
+    console.log(error);
+    Notify.failure(`User ${name} with email address ${email} failed created!`);
+  }
 }
 
-function onSignIn() { 
+function onSignIn() {
   const name = `${refs.authorizationWindowForm.elements.name.value}`;
   const email = `${refs.authorizationWindowForm.elements.email.value}`;
   const password = `${refs.authorizationWindowForm.elements.password.value}`;
   if (email.length < 4) {
     Notify.failure(
       `User email address is wrong! Please enter an email address.`
-    );
+    ); // повідомлення про невірну електронну адресу
     return;
   }
   if (password.length < 4) {
     Notify.failure(`User password is wrong! Please enter a password.`);
     return;
+  } // повідомлення про невірний пароль
+
+  try {
+    // Sign in with email and pass.
+    signInWithEmailAndPassword(auth, email, password)
+      .then(userCredential => {
+        // Signed in
+        user = userCredential.user; // авторизований користувач  
+        console.log(user.uid);      
+        refs.btnLogin.classList.add('visually-hidden'); // приховати кнопку "Sign up"
+        refs.btnSigned.classList.remove('visually-hidden'); // показати кнопку "User"
+        // refs.btnLoginTextSigned.textContent = name; // записати в кнопку "User" і'мя користувача
+        refs.authorization.classList.toggle('is-hidden'); // приховати вікно авторизації
+        refs.authorizationWindowForm.reset(); // очистити форму
+        Notify.success(
+          `User ${name} with email address ${email} successfully SIGNED!`
+        ); // повідомлення про успішну операцію авторизації
+
+        const response = reedBookID(refs.writeButton.textContent); // запит в базу даних на користувача, що авторизований        
+        response.then((val)=>{
+          const res = JSON.parse(val); // розпарсити відповідь з бази даних                   
+          const nameUser = res.name; // і'мя користувача з бази даних
+          const idBook = res["id-book"]; // масив id книжок з бази даних        
+          console.log(idBook);
+          refs.btnLoginTextSigned.textContent = nameUser; // записати і'мя користувача з бази даних в кнопку користувача
+        })
+        // ...
+      })
+      .catch(error => {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        // console.log(errorCode);
+        // console.log(errorMessage);
+
+        if (errorCode === 'auth/wrong-password') {
+          Notify.failure(`Wrong password!`); // повідомлення про невірний пароль
+        } else {
+          Notify.failure(`${errorMessage}`); // повідомлення з текстом помилки
+        }
+        console.log(error);
+        // ..
+      });
+  } catch (error) {
+    console.log(error);
+    Notify.failure(`User ${name} with email address ${email} failed SIGNED!`);
   }
-  // Sign in with email and pass.
-  signInWithEmailAndPassword(auth, email, password)
-    .then(userCredential => {
-      // Signed in
-      const user = userCredential.user;
-      // console.log(user);
-      refs.btnLogin.classList.add('visually-hidden');
-      refs.btnSigned.classList.remove('visually-hidden');
-      refs.btnLoginTextSigned.textContent = name;
-      refs.authorization.classList.toggle('is-hidden');
-      refs.authorizationWindowForm.reset();
-      Notify.success(
-        `User ${name} with email address ${email} successfully SIGNED!`
-      );
-      // ...
-    })
-    .catch(function (error) {
-      // Handle Errors here.
-      var errorCode = error.code;
-      var errorMessage = error.message;
-      if (errorCode === 'auth/wrong-password') {
-        Notify.failure(
-          `Wrong password.`
-        );        
-      } else {
-        Notify.failure(
-          `${errorMessage}`
-        );         
-      }
-      console.log(error);
-    });  
 }
 
-refs.btnLogout.addEventListener('click', onSignOut);
+refs.btnLogout.addEventListener('click', onSignOut); // слухач події Log out
+
+refs.btnSigned.addEventListener("click", ()=>{
+  refs.btnLogout.classList.toggle('visually-hidden'); // показати кнопку "Log out"
+}) // слухач події натискання кнопки "User" для показу кнопку "Log out" 
 
 function onSignOut() {
   try {
@@ -148,6 +255,7 @@ function onSignOut() {
       .then(() => {
         refs.btnLogin.classList.remove('visually-hidden'); // показати кнопку "Sign up"
         refs.btnSigned.classList.add('visually-hidden'); // приховати кнопку з імям авторизованого користувача
+        refs.btnLogout.classList.add('visually-hidden'); // приховати кнопку "Log out"
         Notify.success(
           `User ${refs.btnLoginTextSigned.textContent} with email address ${email} successfully SIGNED OUT!`
         ); // повідомлення про успішну операцію
@@ -156,38 +264,22 @@ function onSignOut() {
         console.log(error);
         Notify.failure(
           `User ${refs.btnLoginTextSigned.textContent} with email address ${email} failed SIGNED OUT!`
-        );
+        ); // повідомлення про не успішну операцію
       });
   } catch (error) {
     console.log(error);
     Notify.failure(
       `User ${refs.btnLoginTextSigned.textContent} with email address ${email} failed SIGNED OUT!`
-    );
+    ); // повідомлення про не успішну операцію
   }
 }
-
-// function deletUser() {
-//   if (auth.currentUser) {
-//     auth.currentUser.delete;
-//     auth.signOut();
-//     refs.authorizationWindowForm.reset();
-//     refs.authorization.classList.toggle("is-hidden");
-//     Notify.success(
-//       `User with email address ${email} successfully DELITED!`
-//     );
-//   } else {
-//     Notify.failure(
-//         `User must be authorized before deletion.`
-//       );
-//     };
-// }
 
 window.addEventListener('beforeunload', () => {
   try {
     auth
       .signOut()
       .then(responce => {
-        console.log(responce);
+        // console.log(responce);
       })
       .catch(error => {
         console.log(error);
@@ -202,14 +294,80 @@ function initApp() {
   auth.onAuthStateChanged(function (user) {
     if (user) {
       // User is signed in.
+      // refs.headerNav.classList.remove('visually-hidden'); // показати кнопки "Home" та "ShoppingList"
+      refs.headerList.classList.remove('visually-hidden'); // показати кнопки "Home" та "ShoppingList"
       console.log('User is signed in.');
     } else {
       // User is signed out.
+      // refs.headerNav.classList.add('visually-hidden'); // приховати кнопки "Home" та "ShoppingList"
+      refs.headerList.classList.add('visually-hidden'); // приховати кнопки "Home" та "ShoppingList"
       console.log('User is signed out.');
-    } // якщо слухач авторизований то ..., інакше ...
+    } // якщо слухач авторизований то повідомлення "Користувач авторизований" та показати кнопки, інакше повідомлення "Користувач не авторизований" та приховати кнопки
   });
 } // ініціалізація застосунку. Додається слухач, який відслідковує зміну ствну авторизації користувача
 
 window.addEventListener('load', () => {
   initApp();
 }); // при завершенні завантаження всіх елементів "window" запускається функція ініціалізації застосунку
+// - - - - - - - - -  - - - - - - /функції авторизації - - - - - - - - - - - - - - -
+/* =========================== /authorization-window section =========================== */
+
+import { doc, getFirestore, setDoc, getDoc, addDoc } from "firebase/firestore";
+import { doc, updateDoc, arrayUnion, arrayRemove } from "firebase/firestore";
+
+refs.writeButton.addEventListener("click", ()=>{
+addBookID(refs.authorizationId.value)
+}
+  );     
+
+refs.reedButton.addEventListener("click", ()=>{dellBookID(refs.authorizationId.value)});
+refs.reedButton2.addEventListener("click", ()=>{reedBookID()});
+
+const firestore = getFirestore(app);
+
+async function addBookID(id) {
+  console.log(`${user.uid}`);
+await updateDoc( doc(firestore, "books", `${user.uid}`), {   
+  id_book: arrayUnion(id)
+}).catch((error)=>{
+  console.log(error.message);
+});
+} // функція додавання ID-книжки до бази даних (потребує id книги яку необхідно записати в БД)
+
+async function dellBookID(id) {
+await updateDoc( doc(firestore, "books", `${user.uid}`), {
+  id_book: arrayRemove(id)  
+}).catch((error)=>{
+  console.log(error.message);
+});
+} // функція видалення ID-книжки з бази даних (потребує id книги яку необхідно видалити з БД)
+
+async function reedBookID () {
+  try {
+    const mySnapshot = await getDoc( doc(firestore, "books", `${user.uid}`));
+    console.log(`${user.uid}`);    
+    if (mySnapshot.exists()) {
+      const docData = mySnapshot.data();      
+      console.log(`My data is ${JSON.stringify(docData)}`);
+      return JSON.stringify(docData);
+        } else {
+      // docSnap.data() will be undefined in this case
+      console.log("No such document!");      
+    } // якщо запис поточний користувач зареєстрований в базі, беремо дані за його "uid" 
+  } catch {
+      console.log("No such document!");
+    }
+    };
+
+    async function writeUserName (nameUser) {    
+      try {
+        await setDoc(doc(firestore, "books", `${user.uid}`), {
+          name: nameUser}).then(()=>{
+          // console.log("This value has been written to the database.");
+        }).catch((error)=>{
+          console.log(`I got an error! ${error}`);
+        })
+      } catch (error) {
+        console.log(`I got an error! ${error}`);
+      }  
+    } // при створенні користувача робимо запис його "uid" та імені в БД 
