@@ -1,7 +1,7 @@
 // =========================== authorization-window section ===========================
 const refs = {
   buttonSwitch: document.querySelector('#toggle-button'),
-  headerNav: document.querySelector('#header-nav'),
+  // headerNav: document.querySelector('#header-nav'),
   authorizationWindowInput: document.querySelectorAll(
     '.authorization-window-input'
   ),
@@ -28,12 +28,12 @@ const refs = {
   headerList: document.querySelector('.header-list'),
 
   writeButton: document.querySelector('#write-button'), // потім видалить
-  reedButton: document.querySelector('#reed-button'), // потім видалить
-  reedButton2: document.querySelector('#reed-button2'), // потім видалить
+  delButton: document.querySelector('#reed-button'), // потім видалить
+  // reedButton: document.querySelector('#reed-button2'), // потім видалить
   authorizationId: document.querySelector('.authorization-id'), // потім видалить
   reedDb: document.querySelector('.reed-db'), // потім видалить
   // }; // масив посилань
-  buttonSwitch: document.querySelector('.btn-switch'),
+
   body: document.querySelector('body'),
   headerImgLight: document.querySelector('.header-img-light'),
   headerImgDark: document.querySelector('.header-img-dark'),
@@ -54,8 +54,6 @@ const refs = {
   authorizationWindowSubmitButton: document.querySelector(
     '.authorization-window-submit-button'
   ),
-  signUpButton: document.querySelector('.up'),
-  signInButton: document.querySelector('.in'),
   // authorizationWindowInput: document.querySelector(
   //   ".authorization-window-input"
   // ),
@@ -73,16 +71,6 @@ refs.buttonSwitch.addEventListener('click', () => {
   refs.headerImgLight.classList.toggle('visually-hidden');
   refs.headerImgDark.classList.toggle('visually-hidden');
   refs.header.classList.toggle('dark');
-});
-
-authorizArr.forEach(el => {
-  console.log(el);
-});
-
-authorizArr.map(el => {
-  console.log(el);
-  console.log(el.classList);
-  el.classList.toggle('dark');
 });
 
 let user = ''; // uid користувача
@@ -103,6 +91,14 @@ if (localStorage.theme === 'dark') {
 } // зміна теми вікна авторизації на темну при старті
 
 refs.buttonSwitch.addEventListener('click', () => {
+  refs.headerImgLight.classList.toggle('visually-hidden');
+  refs.headerImgDark.classList.toggle('visually-hidden');
+  refs.header.classList.toggle('dark');
+  refs.buttonSwitch.classList.toggle('dark');
+  refs.knobsBig.classList.toggle('dark');
+  refs.knobsMedium.classList.toggle('dark');
+  refs.knobsSmall.classList.toggle('dark');
+
   refs.authorizationWindow.classList.toggle('dark');
   refs.authorizationWindowInput.forEach(el => {
     el.classList.toggle('dark');
@@ -264,11 +260,7 @@ function onSignIn() {
 
         reedNameUserDB()
           .then(response => {
-            const nameUser = response.name; // і'мя користувача з бази даних
-            const idBook = response.id_book; // масив id книжок з бази даних
-            console.log(nameUser);
-            console.log(idBook);
-            refs.btnLoginTextSigned.textContent = nameUser; // записати і'мя користувача з бази даних в кнопку користувача
+            refs.btnLoginTextSigned.textContent = response; // записати і'мя користувача з бази даних в кнопку користувача
           })
           .catch(error => {
             console.log(error.message);
@@ -279,7 +271,6 @@ function onSignIn() {
         const errorMessage = error.message;
         // console.log(errorCode);
         // console.log(errorMessage);
-
         if (errorCode === 'auth/wrong-password') {
           Notify.failure(`Wrong password!`); // повідомлення про невірний пароль
         } else {
@@ -346,13 +337,19 @@ function initApp() {
   auth.onAuthStateChanged(function (user) {
     if (user) {
       // User is signed in.
-      refs.headerNav.classList.remove('visually-hidden'); // показати кнопки "Home" та "ShoppingList"
-      // refs.headerList.classList.remove('visually-hidden'); // показати кнопки "Home" та "ShoppingList"
+      // refs.headerNav.classList.remove('visually-hidden'); // показати кнопки "Home" та "ShoppingList"
+      refs.headerList.classList.remove('visually-hidden'); // показати кнопки "Home" та "ShoppingList"
+
+      refs.writeButton.disabled = false;
+      refs.delButton.disabled = false;
+
       // console.log('User is signed in.');
     } else {
       // User is signed out.
-      refs.headerNav.classList.add('visually-hidden'); // приховати кнопки "Home" та "ShoppingList"
-      // refs.headerList.classList.add('visually-hidden'); // приховати кнопки "Home" та "ShoppingList"
+      // refs.headerNav.classList.add('visually-hidden'); // приховати кнопки "Home" та "ShoppingList"
+      refs.headerList.classList.add('visually-hidden'); // приховати кнопки "Home" та "ShoppingList"
+      refs.writeButton.disabled = true;
+      refs.delButton.disabled = true;
       // console.log('User is signed out.');
     } // якщо слухач авторизований то повідомлення "Користувач авторизований" та показати кнопки, інакше повідомлення "Користувач не авторизований" та приховати кнопки
   });
@@ -367,13 +364,15 @@ window.addEventListener('load', () => {
 import { doc, getFirestore, setDoc, getDoc } from 'firebase/firestore';
 import { doc, updateDoc, arrayUnion, arrayRemove } from 'firebase/firestore';
 
-// refs.writeButton.addEventListener('click', () => {
-//   addBookID(refs.authorizationId.value);
-// });
+refs.writeButton.addEventListener('click', () => {
+  addBookID(refs.authorizationId.value);
+  reedBookID();
+});
+refs.delButton.addEventListener('click', () => {
+  dellBookID(refs.authorizationId.value);
+  reedBookID();
+});
 // refs.reedButton.addEventListener('click', () => {
-//   dellBookID(refs.authorizationId.value);
-// });
-// refs.reedButton2.addEventListener('click', () => {
 //   reedBookID();
 // });
 
@@ -401,42 +400,15 @@ async function reedBookID() {
   // console.log(`${user.uid}`);
   if (mySnapshot.exists()) {
     const docData = mySnapshot.data();
-    // const nameUser = docData.name; // і'мя користувача з бази даних
     const idBook = docData.id_book; // масив id книжок з бази даних
-    // console.log(nameUser);
-    // console.log(idBook);
     console.log(docData);
-    // refs.reedDb.textContent = idBook; // видалити - - - - - - - - - - - - - - - - - - - - -
+    refs.reedDb.textContent = idBook; // видалити - - - - - - - - - - - - - - - - - - - - -
     return idBook;
   } else {
     // docSnap.data() will be undefined in this case
     console.log('No such document!');
   } // якщо запис поточний користувач зареєстрований в базі, беремо дані за його "uid"
 }
-
-// const response = reedBookID(); // запит в базу даних на користувача, що авторизований
-// response.then((val)=>{
-//   const res = JSON.parse(val); // розпарсити відповідь з бази даних
-//   const nameUser = res.name; // і'мя користувача з бази даних
-//   const idBook = res["id-book"]; // масив id книжок з бази даних
-//   // console.log(idBook);
-//   refs.btnLoginTextSigned.textContent = nameUser;
-// })
-
-// async function reedBookID () {
-//   try {
-//     const mySnapshot = await getDoc( doc(firestore, "books", ${user.uid}));
-//     if (mySnapshot.exists()) {
-//       const docData = mySnapshot.data();
-//       return JSON.stringify(docData);
-//         } else {
-//       // docSnap.data() will be undefined in this case
-//       console.log("No such document!");
-//     } // якщо запис поточний користувач зареєстрований в базі, беремо дані за його "uid"
-//   } catch {
-//       console.log("No such document!");
-//     }
-//     };
 
 async function writeUserName(nameUser) {
   try {
@@ -457,22 +429,7 @@ async function writeUserName(nameUser) {
 async function reedNameUserDB() {
   const mySnapshot = await getDoc(doc(firestore, 'books', `${user.uid}`));
   if (mySnapshot.exists()) {
-    mySnapshot
-      .data()
-      .then(response => {
-        const nameUser = response.name; // і'мя користувача з бази даних
-        const idBook = response.id_book; // масив id книжок з бази даних
-        console.log(nameUser);
-        console.log(idBook);
-        // refs.btnLoginTextSigned.textContent = nameUser; // записати і'мя користувача з бази даних в кнопку користувача
-      })
-      .catch(error => {
-        console.log(error.message);
-      });
-    // const docData = mySnapshot.data();
-    // const nameUser = docData.name; // і'мя користувача з бази даних
-    // return nameUser;
-    return nameUser;
+    return mySnapshot.data().name;
   } else {
     console.log('No such document!');
   } // якщо запис поточний користувач зареєстрований в базі, беремо дані за його "uid"
