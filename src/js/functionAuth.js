@@ -1,4 +1,4 @@
-/* =========================== authorization-window section =========================== */
+// =========================== authorization-window section ===========================
 const refs = {
   buttonSwitch: document.querySelector('#toggle-button'),
   headerNav: document.querySelector('#header-nav'),
@@ -25,20 +25,67 @@ const refs = {
   authorizationWindowIcon: document.querySelectorAll(
     '.authorization-window-icon'
   ),
-  headerList: document.querySelector(
-    '.header-list'),    
+  headerList: document.querySelector('.header-list'),
 
-    
+  writeButton: document.querySelector('#write-button'), // потім видалить
+  reedButton: document.querySelector('#reed-button'), // потім видалить
+  reedButton2: document.querySelector('#reed-button2'), // потім видалить
+  authorizationId: document.querySelector('.authorization-id'), // потім видалить
+  reedDb: document.querySelector('.reed-db'), // потім видалить
+  // }; // масив посилань
+  buttonSwitch: document.querySelector('.btn-switch'),
+  body: document.querySelector('body'),
+  headerImgLight: document.querySelector('.header-img-light'),
+  headerImgDark: document.querySelector('.header-img-dark'),
+  header: document.querySelector('header'),
+  knobsBig: document.querySelector('.knobs-big'),
+  knobsMedium: document.querySelector('.knobs-medium'),
+  knobsSmall: document.querySelector('.knobs-small'),
+  authorizationWindowInput: document.querySelectorAll(
+    '.authorization-window-input'
+  ),
+  authorizationWindow: document.querySelector('.authorization-window'),
+  authorizationWindowCloseButtonIcon: document.querySelector(
+    '.authorization-window-close-button-icon'
+  ),
+  authorizationWindowIcon: document.querySelectorAll(
+    '.authorization-window-icon'
+  ),
+  authorizationWindowSubmitButton: document.querySelector(
+    '.authorization-window-submit-button'
+  ),
+  signUpButton: document.querySelector('.up'),
+  signInButton: document.querySelector('.in'),
+  // authorizationWindowInput: document.querySelector(
+  //   ".authorization-window-input"
+  // ),
 
+  //   searchForm: document.querySelector("#search-form"),
+  //   preamble: document.querySelector(".preamble"),
+  //   imagesList: document.querySelector(".gallery"),
+  //   loader: document.querySelector(".loader"),
+  //   guard: document.querySelector(".guard"),
+};
 
-    writeButton: document.querySelector('#write-button'), // потім видалить    
-    reedButton: document.querySelector('#reed-button'), // потім видалить
-    reedButton2: document.querySelector('#reed-button2'), // потім видалить
-    authorizationId: document.querySelector('.authorization-id'), // потім видалить
-    reedDb: document.querySelector('.reed-db'), // потім видалить
-}; // масив посилань 
+let thema = true;
+refs.buttonSwitch.addEventListener('click', () => {
+  refs.body.classList.toggle('dark');
+  refs.headerImgLight.classList.toggle('visually-hidden');
+  refs.headerImgDark.classList.toggle('visually-hidden');
+  refs.header.classList.toggle('dark');
+});
 
-let user = ""; // uid користувача
+authorizArr.forEach(el => {
+  console.log(el);
+});
+
+authorizArr.map(el => {
+  console.log(el);
+  console.log(el.classList);
+  el.classList.toggle('dark');
+});
+
+let user = ''; // uid користувача
 
 // - - - - - - - - - - - - - - - зміна теми вікна авторизації - - - - - - - - - - - - - - -
 if (localStorage.theme === 'dark') {
@@ -128,7 +175,8 @@ const auth = getAuth(app); // повертаємо в змінну "auth" екз
 refs.authorizationWindowForm.addEventListener('submit', e => {
   e.preventDefault(); // блокування дій браузера за замовчуванням
   if (
-    refs.authorizationWindowSubmitButton.textContent.trim().toLowerCase() === 'sign up'
+    refs.authorizationWindowSubmitButton.textContent.trim().toLowerCase() ===
+    'sign up'
   ) {
     signUpWithEmailPassword();
   } else {
@@ -141,14 +189,14 @@ function signUpWithEmailPassword() {
   const email = `${refs.authorizationWindowForm.elements.email.value}`;
   const password = `${refs.authorizationWindowForm.elements.password.value}`;
 
-  // [START auth_signup_password]  
+  // [START auth_signup_password]
   try {
     createUserWithEmailAndPassword(auth, email, password)
       .then(userCredential => {
         // Signed in
-        user = userCredential.user; // авторизований користувач 
+        user = userCredential.user; // авторизований користувач
         console.log(user.uid);
-        userID = user.uid;        
+        userID = user.uid;
         refs.btnLogin.classList.add('visually-hidden'); // приховати кнопку "Sign up"
         refs.btnSigned.classList.remove('visually-hidden'); // показати кнопку "User"
         refs.btnLoginTextSigned.textContent = name; // записати в кнопку "User" і'мя користувача
@@ -202,9 +250,9 @@ function onSignIn() {
     signInWithEmailAndPassword(auth, email, password)
       .then(userCredential => {
         // Signed in
-        user = userCredential.user; // авторизований користувач  
-        // console.log(user.uid); 
-        userID = user.uid;    
+        user = userCredential.user; // авторизований користувач
+        // console.log(user.uid);
+        userID = user.uid;
         refs.btnLogin.classList.add('visually-hidden'); // приховати кнопку "Sign up"
         refs.btnSigned.classList.remove('visually-hidden'); // показати кнопку "User"
         // refs.btnLoginTextSigned.textContent = name; // записати в кнопку "User" і'мя користувача
@@ -214,20 +262,17 @@ function onSignIn() {
           `User ${name} with email address ${email} successfully SIGNED!`
         ); // повідомлення про успішну операцію авторизації
 
-         // запит в базу даних на користувача, що авторизований        
-       
-       reedBookID().then((response)=>{
-        const nameUser = response.name; // і'мя користувача з бази даних
-        const idBook = response.id_book; // масив id книжок з бази даних        
-        console.log(nameUser);
-        console.log(idBook);
-        refs.btnLoginTextSigned.textContent = nameUser; // записати і'мя користувача з бази даних в кнопку користувача
-       }).catch((error)=>{
-        console.log(error.message);
-       })     
-          
-        
-        // ...
+        reedNameUserDB()
+          .then(response => {
+            const nameUser = response.name; // і'мя користувача з бази даних
+            const idBook = response.id_book; // масив id книжок з бази даних
+            console.log(nameUser);
+            console.log(idBook);
+            refs.btnLoginTextSigned.textContent = nameUser; // записати і'мя користувача з бази даних в кнопку користувача
+          })
+          .catch(error => {
+            console.log(error.message);
+          });
       })
       .catch(error => {
         const errorCode = error.code;
@@ -251,9 +296,9 @@ function onSignIn() {
 
 refs.btnLogout.addEventListener('click', onSignOut); // слухач події Log out
 
-refs.btnSigned.addEventListener("click", ()=>{
+refs.btnSigned.addEventListener('click', () => {
   refs.btnLogout.classList.toggle('visually-hidden'); // показати кнопку "Log out"
-}) // слухач події натискання кнопки "User" для показу кнопку "Log out" 
+}); // слухач події натискання кнопки "User" для показу кнопку "Log out"
 
 function onSignOut() {
   try {
@@ -301,13 +346,13 @@ function initApp() {
   auth.onAuthStateChanged(function (user) {
     if (user) {
       // User is signed in.
-      // refs.headerNav.classList.remove('visually-hidden'); // показати кнопки "Home" та "ShoppingList"
-      refs.headerList.classList.remove('visually-hidden'); // показати кнопки "Home" та "ShoppingList"
+      refs.headerNav.classList.remove('visually-hidden'); // показати кнопки "Home" та "ShoppingList"
+      // refs.headerList.classList.remove('visually-hidden'); // показати кнопки "Home" та "ShoppingList"
       // console.log('User is signed in.');
     } else {
       // User is signed out.
-      // refs.headerNav.classList.add('visually-hidden'); // приховати кнопки "Home" та "ShoppingList"
-      refs.headerList.classList.add('visually-hidden'); // приховати кнопки "Home" та "ShoppingList"
+      refs.headerNav.classList.add('visually-hidden'); // приховати кнопки "Home" та "ShoppingList"
+      // refs.headerList.classList.add('visually-hidden'); // приховати кнопки "Home" та "ShoppingList"
       // console.log('User is signed out.');
     } // якщо слухач авторизований то повідомлення "Користувач авторизований" та показати кнопки, інакше повідомлення "Користувач не авторизований" та приховати кнопки
   });
@@ -319,115 +364,122 @@ window.addEventListener('load', () => {
 // - - - - - - - - -  - - - - - - /функції авторизації - - - - - - - - - - - - - - -
 
 // - - - - - - - - -  - - - - - - функції роботи з БД - - - - - - - - - - - - - - -
-import { doc, getFirestore, setDoc, getDoc } from "firebase/firestore";
-import { doc, updateDoc, arrayUnion, arrayRemove } from "firebase/firestore";
+import { doc, getFirestore, setDoc, getDoc } from 'firebase/firestore';
+import { doc, updateDoc, arrayUnion, arrayRemove } from 'firebase/firestore';
 
-refs.writeButton.addEventListener("click", ()=>{
-addBookID(refs.authorizationId.value)
-}
-  );
-  refs.reedButton.addEventListener("click", ()=>{dellBookID(refs.authorizationId.value)});
-refs.reedButton2.addEventListener("click", ()=>{reedBookID()});
+// refs.writeButton.addEventListener('click', () => {
+//   addBookID(refs.authorizationId.value);
+// });
+// refs.reedButton.addEventListener('click', () => {
+//   dellBookID(refs.authorizationId.value);
+// });
+// refs.reedButton2.addEventListener('click', () => {
+//   reedBookID();
+// });
 
 const firestore = getFirestore(app);
 
 async function addBookID(id) {
   console.log(`${user.uid}`);
-await updateDoc( doc(firestore, "books", `${user.uid}`), {   
-  id_book: arrayUnion(id)
-}).catch((error)=>{
-  console.log(error.message);
-});
+  await updateDoc(doc(firestore, 'books', `${user.uid}`), {
+    id_book: arrayUnion(id),
+  }).catch(error => {
+    console.log(error.message);
+  });
 } // функція додавання ID-книжки до бази даних (потребує id книги яку необхідно записати в БД)
 
 async function dellBookID(id) {
-await updateDoc( doc(firestore, "books", `${user.uid}`), {
-  id_book: arrayRemove(id)  
-}).catch((error)=>{
-  console.log(error.message);
-});
+  await updateDoc(doc(firestore, 'books', `${user.uid}`), {
+    id_book: arrayRemove(id),
+  }).catch(error => {
+    console.log(error.message);
+  });
 } // функція видалення ID-книжки з бази даних (потребує id книги яку необхідно видалити з БД)
 
-async function reedBookID () {  
-    const mySnapshot = await getDoc( doc(firestore, "books", `${user.uid}`));
-    // console.log(`${user.uid}`);    
-    if (mySnapshot.exists()) {
-      const docData = mySnapshot.data(); 
-        // const nameUser = docData.name; // і'мя користувача з бази даних
-        const idBook = docData.id_book; // масив id книжок з бази даних        
-        // console.log(nameUser);
-        // console.log(idBook);
-        console.log(docData);
-        refs.reedDb.textContent = idBook;                
-      return docData    
-        } else {
-      // docSnap.data() will be undefined in this case
-      console.log("No such document!");      
-    } // якщо запис поточний користувач зареєстрований в базі, беремо дані за його "uid"  
-    };
+async function reedBookID() {
+  const mySnapshot = await getDoc(doc(firestore, 'books', `${user.uid}`));
+  // console.log(`${user.uid}`);
+  if (mySnapshot.exists()) {
+    const docData = mySnapshot.data();
+    // const nameUser = docData.name; // і'мя користувача з бази даних
+    const idBook = docData.id_book; // масив id книжок з бази даних
+    // console.log(nameUser);
+    // console.log(idBook);
+    console.log(docData);
+    // refs.reedDb.textContent = idBook; // видалити - - - - - - - - - - - - - - - - - - - - -
+    return idBook;
+  } else {
+    // docSnap.data() will be undefined in this case
+    console.log('No such document!');
+  } // якщо запис поточний користувач зареєстрований в базі, беремо дані за його "uid"
+}
 
-    // const response = reedBookID(); // запит в базу даних на користувача, що авторизований        
-    // response.then((val)=>{
-    //   const res = JSON.parse(val); // розпарсити відповідь з бази даних                   
-    //   const nameUser = res.name; // і'мя користувача з бази даних
-    //   const idBook = res["id-book"]; // масив id книжок з бази даних        
-    //   // console.log(idBook);
-    //   refs.btnLoginTextSigned.textContent = nameUser;
-    // })
+// const response = reedBookID(); // запит в базу даних на користувача, що авторизований
+// response.then((val)=>{
+//   const res = JSON.parse(val); // розпарсити відповідь з бази даних
+//   const nameUser = res.name; // і'мя користувача з бази даних
+//   const idBook = res["id-book"]; // масив id книжок з бази даних
+//   // console.log(idBook);
+//   refs.btnLoginTextSigned.textContent = nameUser;
+// })
 
+// async function reedBookID () {
+//   try {
+//     const mySnapshot = await getDoc( doc(firestore, "books", ${user.uid}));
+//     if (mySnapshot.exists()) {
+//       const docData = mySnapshot.data();
+//       return JSON.stringify(docData);
+//         } else {
+//       // docSnap.data() will be undefined in this case
+//       console.log("No such document!");
+//     } // якщо запис поточний користувач зареєстрований в базі, беремо дані за його "uid"
+//   } catch {
+//       console.log("No such document!");
+//     }
+//     };
 
-
-
-
-    // async function reedBookID () {
-    //   try {
-    //     const mySnapshot = await getDoc( doc(firestore, "books", ${user.uid}));       
-    //     if (mySnapshot.exists()) {
-    //       const docData = mySnapshot.data();      
-    //       return JSON.stringify(docData);
-    //         } else {
-    //       // docSnap.data() will be undefined in this case
-    //       console.log("No such document!");      
-    //     } // якщо запис поточний користувач зареєстрований в базі, беремо дані за його "uid" 
-    //   } catch {
-    //       console.log("No such document!");
-    //     }
-    //     };
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    async function writeUserName (nameUser) {    
-      try {
-        await setDoc(doc(firestore, "books", `${user.uid}`), {
-          name: nameUser}).then(()=>{
-          // console.log("This value has been written to the database.");
-        }).catch((error)=>{
-          console.log(`I got an error! ${error}`);
-        })
-      } catch (error) {
+async function writeUserName(nameUser) {
+  try {
+    await setDoc(doc(firestore, 'books', `${user.uid}`), {
+      name: nameUser,
+    })
+      .then(() => {
+        // console.log("This value has been written to the database.");
+      })
+      .catch(error => {
         console.log(`I got an error! ${error}`);
-      }  
-    } // при створенні користувача робимо запис його "uid" та імені в БД 
+      });
+  } catch (error) {
+    console.log(`I got an error! ${error}`);
+  }
+} // при створенні користувача робимо запис його "uid" та імені в БД
 
-    export {
-      addBookID,
-      dellBookID,
-      reedBookID,      
-    };    
-    export let userID;
+async function reedNameUserDB() {
+  const mySnapshot = await getDoc(doc(firestore, 'books', `${user.uid}`));
+  if (mySnapshot.exists()) {
+    mySnapshot
+      .data()
+      .then(response => {
+        const nameUser = response.name; // і'мя користувача з бази даних
+        const idBook = response.id_book; // масив id книжок з бази даних
+        console.log(nameUser);
+        console.log(idBook);
+        // refs.btnLoginTextSigned.textContent = nameUser; // записати і'мя користувача з бази даних в кнопку користувача
+      })
+      .catch(error => {
+        console.log(error.message);
+      });
+    // const docData = mySnapshot.data();
+    // const nameUser = docData.name; // і'мя користувача з бази даних
+    // return nameUser;
+    return nameUser;
+  } else {
+    console.log('No such document!');
+  } // якщо запис поточний користувач зареєстрований в базі, беремо дані за його "uid"
+}
+
+export { addBookID, dellBookID, reedBookID };
+export let userID;
 
 // - - - - - - - - -  - - - - - - /функції роботи з БД - - - - - - - - - - - - - - -
-/* =========================== /authorization-window section =========================== */
+// =========================== /authorization-window section ===========================
