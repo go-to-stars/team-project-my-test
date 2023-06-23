@@ -691,27 +691,27 @@ img {
 /* =================== /authorization-window section =================== */
 /* =================== /index.html =================== */
 
-.testDB{
-  
+.testDB{  
   display: flex;  
   flex-direction: column;
-
   padding: 20px;
-
 }
 
 .authorization-id {
   width: 320px;
   margin-right: 10px;
+
   font-size: 20px;
 }
 
-.btn-db {
-  border-radius: 30px;
+.btn-db {  
   margin-right: 10px;  
+  padding: 5px 10ps;
+
   font-size: 20px;
   cursor: pointer;
-  
+
+  border-radius: 30px;  
 }
 
 .reed-db {
